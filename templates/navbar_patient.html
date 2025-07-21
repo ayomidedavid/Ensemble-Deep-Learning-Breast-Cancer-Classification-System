@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand navbar-brand-custom" href="{{ url_for('main.index') }}">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" height="40" class="me-2" style="border-radius: 4px;">
+            Ensemble System
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-custom" href="{{ url_for('main.dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link nav-link-custom">Welcome, {{ session.get('username') }}</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-custom btn" href="{{ url_for('main.logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

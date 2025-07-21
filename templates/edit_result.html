@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Test Result</h2>
+<form method="post">
+    <label for="result">Diagnosis Result:</label>
+    <textarea name="result" required>{{ appointment.result }}</textarea>
+    <button type="submit">Finalize Result</button>
+</form>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-primary">Welcome to the Admin Dashboard</h2>
+    <p class="lead">Manage users, view system logs, and perform administrative tasks.</p>
+
+    <!-- Patients Section -->
+    <div class="mt-4">
+        <h3>Manage Patients</h3>
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Registration Date</th>
+                    <th>Last Login</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.username }}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.registration_date }}</td>
+                    <td>{{ patient.last_login or 'Never' }}</td>
+                    <td>{{ 'Active' if patient.active else 'Disabled' }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('main.toggle_user_status', user_id=patient.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-sm {{ 'btn-danger' if patient.active else 'btn-success' }}">
+                                {{ 'Disable' if patient.active else 'Enable' }}
+                            </button>
+                        </form>
+                        <form method="POST" action="{{ url_for('main.delete_user', user_id=patient.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Consultants Section -->
+    <div class="mt-5">
+        <h3>Manage Consultants</h3>
+        <table class="table table-bordered table-hover">
+            <thead class="table-success">
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Registration Date</th>
+                    <th>Last Login</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consultant in consultants %}
+                <tr>
+                    <td>{{ consultant.id }}</td>
+                    <td>{{ consultant.username }}</td>
+                    <td>{{ consultant.email }}</td>
+                    <td>{{ consultant.registration_date }}</td>
+                    <td>{{ consultant.last_login or 'Never' }}</td>
+                    <td>{{ 'Active' if consultant.active else 'Disabled' }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('main.toggle_user_status', user_id=consultant.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-sm {{ 'btn-danger' if consultant.active else 'btn-success' }}">
+                                {{ 'Disable' if consultant.active else 'Enable' }}
+                            </button>
+                        </form>
+                        <form method="POST" action="{{ url_for('main.delete_user', user_id=consultant.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Reset Password Modal -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Reset password for <strong id="modalUsername"></strong>.</p>
+                    <input type="hidden" id="modalUserId" name="user_id">
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Populate modal with user data
+    const resetPasswordModal = document.getElementById('resetPasswordModal');
+    resetPasswordModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const userId = button.getAttribute('data-user-id');
+        const username = button.getAttribute('data-username');
+
+        const modalUserId = resetPasswordModal.querySelector('#modalUserId');
+        const modalUsername = resetPasswordModal.querySelector('#modalUsername');
+
+        modalUserId.value = userId;
+        modalUsername.textContent = username;
+
+        const form = resetPasswordModal.querySelector('form');
+        form.action = `/reset_password/${userId}`;
+    });
+</script>
+{% endblock %}

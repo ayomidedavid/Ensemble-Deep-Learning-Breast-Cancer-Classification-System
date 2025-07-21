@@ -1,0 +1,11 @@
+<!-- ...existing code... -->
+{% for appointment in appointments %}
+    <!-- ...other appointment info... -->
+    {% if appointment.dicom_path %}
+    <div class="mt-4">
+        <h4>Screening Image for Appointment {{ appointment.id }}:</h4>
+        <img src="{{ url_for('static', filename=appointment.dicom_path.lstrip('static/').replace('\\', '/')) }}" alt="DICOM Image" class="img-fluid" style="max-width: 100%; height: auto;">
+    </div>
+    {% endif %}
+{% endfor %}
+<!-- ...existing code... -->

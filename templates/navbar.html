@@ -1,0 +1,13 @@
+<nav style="position:fixed;top:0;width:100%;background:linear-gradient(135deg,#4a6cf7 0%,#2541b2 100%);z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,0.1);padding:0.8rem 2rem;border-bottom:1px solid rgba(255,255,255,0.2)">
+    <div style="display:flex;align-items:center;gap:2rem;max-width:1200px;margin:0 auto">
+        <img src="/static/images/logo.jpg" alt="Logo" style="height:40px;width:auto;border-radius:20px">
+        <span style="color:white;font-size:1.5rem;font-weight:600;font-family:'Poppins',sans-serif;margin-right:auto">Medical Screening</span>
+        <a href="{{ url_for('main.index') if not session['logged_in'] else url_for('main.dashboard') }}" style="color:white;text-decoration:none;font-family:'Poppins',sans-serif;padding:0.6rem 1.2rem;border-radius:6px;transition:all 0.3s ease;font-weight:500">Home</a>
+        {% if session.get('logged_in') %}
+            <span style="color:white;font-family:'Poppins',sans-serif;">Dr. {{ session['username'] }}</span>
+            <a href="{{ url_for('main.logout') }}" style="color:white;text-decoration:none;font-family:'Poppins',sans-serif;padding:0.6rem 1.2rem;border-radius:6px;transition:all 0.3s ease;font-weight:500">Logout</a>
+        {% else %}
+            <a href="{{ url_for('main.login_consultant') }}" style="color:white;text-decoration:none;font-family:'Poppins',sans-serif;padding:0.6rem 1.2rem;border-radius:6px;transition:all 0.3s ease;font-weight:500;background:rgba(255,255,255,0.2)">Login</a>
+        {% endif %}
+    </div>
+</nav>

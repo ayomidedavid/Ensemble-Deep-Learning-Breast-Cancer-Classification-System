@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+*.sqlite3
+*.db
+*.pkl
+*.h5
+*.pth
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Environment
+.env
+.venv/
+venv/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Project files to ignore
+instance/database.db
+uploads/
+static/uploads/
+*.png
+*.jpg
+*.jpeg
+*.dcm
+
+# Testing and temp
+*.tmp
+*.bak
+
+# Ignore questionnaire and usability/testing docs
+usability.txt
+testing.txt
+question.txt
+new
